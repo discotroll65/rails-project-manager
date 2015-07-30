@@ -1,4 +1,13 @@
-<%= form_for(@project) do |f| %>
+<form action="<%= url %>" method="post">
+  <%= csrf_tag %>
+  <input type="hidden"
+         name="_method"
+         value="<%= http_method %>">
+
+  <input type="hidden"
+         name="task[project_id]"
+         value="<%= passed_in_project_id %>">
+
   <% if @project.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
@@ -12,10 +21,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <label>Name <br>
+      <input type="text" name="project[name]" value="">
+    </label>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <input type="submit" value="<%= button_message%> Project">
   </div>
-<% end %>
+
+</form>

@@ -1,5 +1,10 @@
 <h1>New project</h1>
 
-<%= render 'form' %>
+<%= render 'form',
+  url: projects_url,
+  button_message: "Create",
+  http_method: "post",
+  passed_in_project_id: @project.id
+ %>
 
 <%= link_to 'Back', projects_path %>
