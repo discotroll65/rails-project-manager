@@ -10,27 +10,37 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @project = Project.find(params[:id])
+    @tasks = @project.tasks
   end
 
   # GET /projects/new
   def new
     @project = Project.new
+    @project.tasks << Task.new
+    @tasks = @project.tasks
   end
 
   # GET /projects/1/edit
   def edit
+    @tasks = @project.tasks
   end
 
   # POST /projects
   # POST /projects.json
   def create
-    @project = Project.new(project_params)
+    project_attrs = project_params
+    task_params = project_attrs.delete("tasks_attributes")[0]
+    @project = Project.new(project_attrs)
 
     respond_to do |format|
       if @project.save
+        @project.tasks << Task.new(task_params)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render action: 'show', status: :created, location: @project }
       else
+        @project << Task.new(task_params)
+        @tasks = @project.tasks
         format.html { render action: 'new' }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
@@ -40,6 +50,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    @tasks = @project.tasks
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -69,6 +80,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name)
+      params.require(:project).permit(:name, tasks_attributes: [:name, :status, :description])
     end
 end

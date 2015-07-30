@@ -3,6 +3,9 @@
 <p>
   <strong>Name:</strong>
   <%= @project.name %>
+  <ul class="tasks">
+    <%= render @tasks %>
+  </ul>
 </p>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |

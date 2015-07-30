@@ -4,16 +4,12 @@
          name="_method"
          value="<%= http_method %>">
 
-  <input type="hidden"
-         name="task[project_id]"
-         value="<%= passed_in_project_id %>">
-
-  <% if @project.errors.any? %>
+  <% if project.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
-      <% @project.errors.full_messages.each do |msg| %>
+      <% project.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -22,11 +18,24 @@
 
   <div class="field">
     <label>Name <br>
-      <input type="text" name="project[name]" value="">
+      <input type="text" name="project[name]" value="<%= project.name %>">
     </label>
   </div>
+  <ul>
+    <% tasks.each do |task| %>
+      <li>
+        <%= render 'tasks_form',
+          task: task,
+          passed_in_project_id: passed_in_project_id,
+          url: url,
+          button_message: button_message,
+          http_method: http_method
+         %>
+      </li>
+    <% end %>
+  </ul>
+
   <div class="actions">
     <input type="submit" value="<%= button_message%> Project">
   </div>
-
 </form>

@@ -1,0 +1,28 @@
+<div class="field">
+  <% if task.id %>
+    <input type="hidden"
+    name="project[tasks_attributes][][id]" value="<%= task.id %>">
+  <% end %>
+
+  <label>Task Name <br>
+    <input type="text" name="project[tasks_attributes][][name]" value="<%= task.name %>">
+  </label>
+
+  <label>Task description <br>
+    <textarea name="project[tasks_attributes][][description]" rows="8" cols="40"
+    ><%= task.description %></textarea>
+  </label>
+
+  <label>Status
+    <select name="project[tasks_attributes][][status]">
+      <% options = %w[unstarted started finished] %>
+      <% options.each do |option| %>
+        <option value="<%= option %>"
+          <%= "selected" if task.status == option %>
+        >
+          <%= option %>
+        </option>
+      <% end %>
+    </select>
+  </label>
+</div>
