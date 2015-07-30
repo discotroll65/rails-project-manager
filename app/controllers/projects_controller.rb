@@ -29,17 +29,17 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    project_attrs = project_params
-    task_params = project_attrs.delete("tasks_attributes")[0]
-    @project = Project.new(project_attrs)
+    # project_attrs = project_params
+    # task_params = project_attrs.delete("tasks_attributes")[0]
+    # @project = Project.new(project_attrs)
+    @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
-        @project.tasks << Task.new(task_params)
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render action: 'show', status: :created, location: @project }
       else
-        @project << Task.new(task_params)
+        @project.tasks << Task.new()
         @tasks = @project.tasks
         format.html { render action: 'new' }
         format.json { render json: @project.errors, status: :unprocessable_entity }
@@ -80,6 +80,6 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, tasks_attributes: [:name, :status, :description])
+      params.require(:project).permit(:name, tasks_attributes: [:id, :name, :status, :description])
     end
 end
