@@ -3,6 +3,10 @@
     <input type="hidden"
     name="project[tasks_attributes][][id]" value="<%= task.id %>">
   <% end %>
+  <% if params[:project_id] %>
+    <input type="hidden"
+    name="project[tasks_attributes][][project_id]" value="<%= params[:project_id] %>">
+  <% end %>
 
   <label>Task Name <br>
     <input type="text" name="project[tasks_attributes][][name]" value="<%= task.name %>">

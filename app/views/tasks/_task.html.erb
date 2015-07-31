@@ -1,4 +1,6 @@
 <li>
-  <%= task.name %> | <%= task.status %> | 
-  <%= link_to "details", project_task_url(params[:id], task) %>
+  <%= task.name %> | <%= task.status %> |
+  <%= link_to "details", project_task_url(params[:id], task), class: 'btn' %> |
+  <%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+
 </li>

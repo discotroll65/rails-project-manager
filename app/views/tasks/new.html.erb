@@ -1,0 +1,8 @@
+<h1>Adding task to <%= @project.name %></h1>
+<form action="<%= tasks_url %>" method="post">
+  <%= csrf_tag %>
+  <%= render 'projects/tasks_form', task: @task%>
+  <input type="submit" value="Add task">
+</form>
+
+<%= link_to 'Back', projects_path %>
